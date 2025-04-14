@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Все планеты</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'planets/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Все планеты</h1>
+        <div class="planets-list">
+            {% for planet in planets %}
+                <div class="planet-item">
+                    <img src="{{ planet.image.url }}" alt="{{ planet.name }}">
+                    <h2>{{ planet.name }}</h2>
+                    <p>{{ planet.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'index' %}" class="back-button">Вернуться к квизу</a>
+    </div>
+</body>
+</html>

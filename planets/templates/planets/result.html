@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Изучение планет</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'planets/style.css' %}">
+    <script>
+        function validateForm() {
+            var nameInput = document.forms["answerForm"]["name"].value;
+            if (nameInput == "") {
+                alert("Пожалуйста, введите имя планеты или спутника.");
+                return false;
+            }
+            if (!/^[a-zA-Zа-яА-Я\s]+$/.test(nameInput)) {
+                alert("Имя должно содержать только буквы.");
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ celestial_body.image.url }}" alt="Изображение небесного тела">
+        <p>{{ celestial_body.description }}</p>
+
+        <form name="answerForm" method="post" onsubmit="return validateForm()">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" name="check_answer">Проверить</button>
+        </form>
+
+        {% if correct is not None %}
+            {% if correct %}
+                <p class="correct">Правильно!</p>
+            {% else %}
+                <p class="error">Неправильно. Правильный ответ: {{ correct_answer }}.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
